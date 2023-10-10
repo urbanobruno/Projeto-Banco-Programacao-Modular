@@ -34,7 +34,13 @@ public class Cliente {
     }
 
     public boolean sacar(double valor, Conta conta) {
-        
+        boolean saqueEfetuado = false;
+
+        // TODO realizar logica
+
+
+        return saqueEfetuado;
+
     }
 
     public boolean realizarTransferencia(double valor, Conta contaMandante, Conta contaRecebe) {
