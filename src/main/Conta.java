@@ -13,11 +13,15 @@ public class Conta {
     static List<Conta> contas = new ArrayList<>();
     static int nextContaId = 1;
 
-    public void registrarTransacao(double valor) {
+    public Conta(Cliente cliente) {
+        this.cliente = cliente;
+        numeroConta = "C" + nextContaId;
+        nextContaId++;
+    }
 
+    public void registrarTransacao(double valor) {
         Transacao novaTransacao = new Transacao(valor);
         extrato.add(novaTransacao);
-
     }
 
     public List<Transacao> getExtrato() {
@@ -36,7 +40,15 @@ public class Conta {
         return saldo;
     }
 
+    public void setSaldo(double novoSaldo) {
+        saldo = novoSaldo;
+    }
+
     public Cliente getCliente() {
         return cliente;
     }
-}
+
+        public void atualizarSaldo() {
+            // Implemente a lógica para atualizar o saldo da conta aqui
+        }
+    }
