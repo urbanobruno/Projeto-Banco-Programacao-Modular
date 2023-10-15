@@ -62,15 +62,28 @@ public class Main {
                     mostrarTodasAsContas();
                     break;
                 case 5:
-
-
+                    System.out.println("Digite o CPF do cliente para consultar o saldo: ");
+                    cpf = scanner.next();
+                    cliente = Cliente.buscarClientePorCPF(cpf);
+                    if (cliente != null) {
+                        for (Conta conta : cliente.getContas()) {
+                            System.out.println("Conta: " + conta.getNumeroConta() + ", Saldo: " + conta.getSaldo());
+                        }
+                    } else {
+                        System.out.println("Cliente não encontrado!");
+                    }
                     break;
 
                 case 6:
-
-
-
-                    break;    
+                    System.out.println("Digite o CPF do cliente para consultar o extrato: ");
+                    cpf = scanner.next();
+                    cliente = Cliente.buscarClientePorCPF(cpf);
+                    if (cliente != null) {
+                        cliente.consultarExtrato30Dias();
+                    } else {
+                        System.out.println("Cliente não encontrado!");
+                    }
+                    break;
 
                 case 7:
                     System.out.print("Digite o CPF do cliente: ");
@@ -133,6 +146,10 @@ public class Main {
                     break;
 
                 case 10:
+                    visaoDiretoria();
+                    break;
+
+                case 11:
                     System.out.println("Saindo...");
                     break;
                 default:
@@ -165,5 +182,118 @@ public class Main {
             System.out.println("Número da Conta: " + conta.getNumeroConta() + ", Cliente: "
                     + conta.getCliente().getNome() + ", Saldo: " + conta.getSaldo());
         }
+    }
+
+    public static void visaoDiretoria() {
+        Scanner sc = new Scanner(System.in);
+        int opcaoDiretoria;
+
+        do {
+            System.out.println("Menu Visão de Diretoria:");
+            System.out.println("1. Total em custódia para cada tipo de conta");
+            System.out.println("2. Saldo médio de todas as contas");
+            System.out.println("3. Número de clientes com saldo total negativo");
+            System.out.println("4. Clientes com maior e menor saldo total");
+            System.out.println("5. Voltar ao menu principal");
+            System.out.print("Escolha uma opção: ");
+            opcaoDiretoria = sc.nextInt();
+
+            switch (opcaoDiretoria) {
+                case 1:
+                    mostrarTotalCustodiaPorTipoConta();
+                    break;
+                case 2:
+                    mostrarSaldoMedioContas();
+                    break;
+                case 3:
+                    mostrarClientesSaldoNegativo();
+                    break;
+                case 4:
+                    mostrarClientesMaiorMenorSaldo();
+                    break;
+                case 5:
+                    System.out.println("Voltando ao menu principal...");
+                    break;
+                default:
+                    System.out.println("Opção inválida. Tente novamente.");
+            }
+        } while (opcaoDiretoria != 5);
+    }
+
+    public static void mostrarTotalCustodiaPorTipoConta() {
+        double totalContaCorrente = 0;
+        double totalContaPoupanca = 0;
+        double totalContaRendaFixa = 0;
+        double totalContaInvestimento = 0;
+
+        for (Conta conta : Conta.contas) {
+            if (conta instanceof ContaCorrente) {
+                totalContaCorrente += conta.getSaldo();
+            } else if (conta instanceof Poupanca) {
+                totalContaPoupanca += conta.getSaldo();
+            } else if (conta instanceof RendaFixa) {
+                totalContaRendaFixa += conta.getSaldo();
+            } else if (conta instanceof Investimento) {
+                totalContaInvestimento += conta.getSaldo();
+            }
+        }
+
+        System.out.println("Total em custódia:");
+        System.out.println("Conta Corrente: R$" + totalContaCorrente);
+        System.out.println("Conta Poupança: R$" + totalContaPoupanca);
+        System.out.println("Conta Renda Fixa: R$" + totalContaRendaFixa);
+        System.out.println("Conta Investimento: R$" + totalContaInvestimento);
+    }
+
+    public static void mostrarSaldoMedioContas() {
+        double totalSaldo = 0;
+
+        for (Conta conta : Conta.contas) {
+            totalSaldo += conta.getSaldo();
+        }
+
+        double saldoMedio = totalSaldo / Conta.contas.size();
+        System.out.println("Saldo médio de todas as contas: R$" + saldoMedio);
+    }
+
+    public static void mostrarClientesSaldoNegativo() {
+        int countClientesNegativos = 0;
+
+        for (Cliente cliente : Cliente.clientes) {
+            double saldoTotalCliente = 0;
+            for (Conta conta : cliente.getContas()) {
+                saldoTotalCliente += conta.getSaldo();
+            }
+            if (saldoTotalCliente < 0) {
+                countClientesNegativos++;
+            }
+        }
+
+        System.out.println("Número de clientes com saldo total negativo: " + countClientesNegativos);
+    }
+
+    public static void mostrarClientesMaiorMenorSaldo() {
+        Cliente clienteMaiorSaldo = null;
+        Cliente clienteMenorSaldo = null;
+        double maiorSaldo = Double.MIN_VALUE;
+        double menorSaldo = Double.MAX_VALUE;
+
+        for (Cliente cliente : Cliente.clientes) {
+            double saldoTotalCliente = 0;
+            for (Conta conta : cliente.getContas()) {
+                saldoTotalCliente += conta.getSaldo();
+            }
+            if (saldoTotalCliente > maiorSaldo) {
+                maiorSaldo = saldoTotalCliente;
+                clienteMaiorSaldo = cliente;
+            }
+            if (saldoTotalCliente < menorSaldo) {
+                menorSaldo = saldoTotalCliente;
+                clienteMenorSaldo = cliente;
+            }
+        }
+
+        System.out.println("Cliente com maior saldo: " + clienteMaiorSaldo.getNome() + ", Saldo: R$" + maiorSaldo);
+        System.out.println("Cliente com menor saldo: " + clienteMenorSaldo.getNome() + ", Saldo: R$" + menorSaldo);
     }
 }
