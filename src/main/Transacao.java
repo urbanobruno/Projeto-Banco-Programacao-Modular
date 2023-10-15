@@ -18,4 +18,12 @@ public class Transacao {
 
     }
 
+    public LocalDate getData() {
+        return data;
+    }
+
+    public double getValorTransacao() {
+        return valorTransacao;
+    }
+
 }

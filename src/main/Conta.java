@@ -4,15 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Conta {
-    int id;
-    String numeroConta;
-    Cliente cliente;
-    double saldo;
-    List<Transacao> extrato = new ArrayList<>(); 
+    private int id;
+    private String numeroConta;
+    private Cliente cliente;
+    private double saldo;
+    private List<Transacao> extrato = new ArrayList<>(); 
 
-    static List<Conta> contas = new ArrayList<>();
-    static int nextContaId = 1;
-
+    public static List<Conta> contas = new ArrayList<>();
+    private static int nextContaId = 1;
+ 
     public Conta(Cliente cliente) {
         this.cliente = cliente;
         numeroConta = "C" + nextContaId;
@@ -48,7 +48,8 @@ public class Conta {
         return cliente;
     }
 
-        public void atualizarSaldo() {
-            // Implemente a lógica para atualizar o saldo da conta aqui
-        }
+    public void atualizarSaldo() {
+        // Implemente a lógica para atualizar o saldo da conta aqui
     }
+
+}

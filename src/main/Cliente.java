@@ -1,23 +1,53 @@
 package main;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Cliente {
-    int id;
-    String nome;
-    String cpf;
-    List<Conta> contas = new ArrayList<>();
+    private int id;
+    private String nome;
+    private String cpf;
 
-    static List<Cliente> clientes = new ArrayList<>();
-    static int nextClienteId = 1;
+    List<Conta> contas = new ArrayList<>();
+    public static List<Cliente> clientes = new ArrayList<>();
+    private static int nextClienteId = 1;
+
+    public Cliente(String nome, String cpf) {
+        this.id = nextClienteId;
+
+        this.nome = nome;
+        this.cpf = cpf;
+    }
+
+    public static boolean cpfExiste(String cpf) {
+        for (Cliente cliente : clientes) {
+            if (cliente.getCpf().equals(cpf)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     public double consultarSaldo(Conta conta) {
         return conta.getSaldo();
     }
 
     public void consultarExtrato30Dias() {
+        LocalDate dataAtual = LocalDate.now();
+        LocalDate trintaDiasAtras = dataAtual.minusDays(30);
+    
+        System.out.println("Extrato dos últimos 30 dias para o cliente " + nome + ":");
         
+        for (Conta conta : contas) {
+            System.out.println("Conta: " + conta.getNumeroConta());
+            for (Transacao transacao : conta.getExtrato()) {
+                if (!transacao.getData().isBefore(trintaDiasAtras)) {
+                    System.out.println("Data: " + transacao.getData() + ", Valor: " + transacao.getValorTransacao());
+                }
+            }
+            System.out.println("-----"); // Uma linha separadora para cada conta
+        }
     }
 
     public boolean depositar(double valor, Conta conta) {
@@ -25,21 +55,13 @@ public class Cliente {
 
         // Todo testar
         if (valor > 0) {
-            conta.saldo += valor;
+            conta.setSaldo(conta.getSaldo() + valor);
             depositoEfetuado = true;
+
+            conta.registrarTransacao(valor);
         }
 
         return depositoEfetuado;
-
-    }
-
-    public boolean sacar(double valor, Conta conta) {
-        boolean saqueEfetuado = false;
-
-        // TODO realizar logica
-
-
-        return saqueEfetuado;
 
     }
 
@@ -47,8 +69,9 @@ public class Cliente {
         boolean trasferenciaEfetuada = false;
         
         if (valor > 0) {
-            contaMandante.saldo -= valor;
-            contaRecebe.saldo += valor;
+            contaMandante.setSaldo(contaMandante.getSaldo() - valor);
+            contaRecebe.setSaldo(contaRecebe.getSaldo() - valor);
+
             trasferenciaEfetuada = true;
 
             contaMandante.registrarTransacao(0 - valor);
@@ -73,6 +96,15 @@ public class Cliente {
 
     public String getNome() {
         return nome;
+    }
+
+    public static Cliente buscarClientePorCPF(String cpf) {
+        for (Cliente cliente : Cliente.clientes) {
+            if (cliente.getCpf().equals(cpf)) {
+                return cliente;
+            }
+        }
+        return null;
     }
 
 }
