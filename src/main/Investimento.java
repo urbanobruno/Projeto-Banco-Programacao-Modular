@@ -14,7 +14,7 @@ public class Investimento extends Conta {
 
     @Override
     public void atualizarSaldo() {
-        double saldoAtual = getSaldo();
+        double saldoAtual = this.getSaldo();
 
         double variacaoDiaria = (new Random().nextDouble() - 0.5) / 10.0;
 
@@ -28,21 +28,24 @@ public class Investimento extends Conta {
         saldoAtual += rendimentoDiario;
         setSaldo(saldoAtual);
     }
-}
+
 
 
  public void sacar(double valor) {
-        double saldoAtual = getSaldo();
+        double saldoAtual = this.getSaldo();
 
         if (valor <= 0) {
             System.out.println("O valor do saque deve ser positivo.");
         } else {
             double rendimento = this.rendimento;
-            double imposto = rendimento * IMPOSTO;
+            double rendimentoTaxado = (rendimento * IMPOSTO) * TAXA;
 
-            if (saldoAtual >= valor + imposto) {
-                saldoAtual -= (valor + imposto);
+            if (saldoAtual >= valor + rendimentoTaxado) {
+                saldoAtual -= (valor + rendimentoTaxado);
                 setSaldo(saldoAtual);
+
+                this.rendimento = 0;
+
                 System.out.println("Saque de R$" + valor + " realizado com sucesso.");
             } else {
                 System.out.println("Saldo insuficiente para realizar o saque após o desconto de imposto.");

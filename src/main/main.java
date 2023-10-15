@@ -62,15 +62,77 @@ public class Main {
                     mostrarTodasAsContas();
                     break;
                 case 5:
-                    // Lógica para depositar
+
+
                     break;
+
                 case 6:
+
+
+
+                    break;    
+
+                case 7:
+                    System.out.print("Digite o CPF do cliente: ");
+                    String cpfDeposito = scanner.next();
+                    Cliente clienteDeposito = Cliente.buscarClientePorCPF(cpfDeposito);
+                    if (clienteDeposito != null) {
+                        System.out.print("Digite o número da conta: ");
+                        String numeroContaDeposito = scanner.next();
+                        Conta contaDeposito = Conta.buscarContaPorNumero(numeroContaDeposito);
+                        if (contaDeposito != null) {
+                            System.out.print("Digite o valor a ser depositado: ");
+                            double valorDeposito = scanner.nextDouble();
+                            if (clienteDeposito.depositar(valorDeposito, contaDeposito)) {
+                                System.out.println("Depósito realizado com sucesso!");
+                            } else {
+                                System.out.println("Depósito falhou!");
+                            }
+                        } else {
+                            System.out.println("Conta não encontrada!");
+                        }
+                    } else {
+                        System.out.println("Cliente não encontrado!");
+                    }
+                    break;
+
+                case 8:
                     // Lógica para sacar
                     break;
-                case 7:
-                    // Lógica para transferir
+                case 9:
+
+                    System.out.print("Digite o CPF do cliente que está transferindo: ");
+                    String cpfTransferencia = scanner.next();
+                    Cliente clienteTransferencia = Cliente.buscarClientePorCPF(cpfTransferencia);
+                    if (clienteTransferencia != null) {
+                        System.out.print("Digite o número da conta de origem: ");
+                        String numeroContaOrigem = scanner.next();
+                        Conta contaOrigem = Conta.buscarContaPorNumero(numeroContaOrigem);
+                        if (contaOrigem != null) {
+                            System.out.print("Digite o número da conta de destino: ");
+                            String numeroContaDestino = scanner.next();
+                            Conta contaDestino = Conta.buscarContaPorNumero(numeroContaDestino);
+                            if (contaDestino != null) {
+                                System.out.print("Digite o valor a ser transferido: ");
+                                double valorTransferencia = scanner.nextDouble();
+                                if (clienteTransferencia.realizarTransferencia(valorTransferencia, contaOrigem,
+                                        contaDestino)) {
+                                    System.out.println("Transferência realizada com sucesso!");
+                                } else {
+                                    System.out.println("Transferência falhou!");
+                                }
+                            } else {
+                                System.out.println("Conta de destino não encontrada!");
+                            }
+                        } else {
+                            System.out.println("Conta de origem não encontrada!");
+                        }
+                    } else {
+                        System.out.println("Cliente não encontrado!");
+                    }
                     break;
-                case 8:
+
+                case 10:
                     System.out.println("Saindo...");
                     break;
                 default:

@@ -19,6 +19,15 @@ public class Conta {
         nextContaId++;
     }
 
+    public static Conta buscarContaPorNumero(String numeroConta) {
+        for (Conta conta : Conta.contas) {
+            if (conta.getNumeroConta().equals(numeroConta)) {
+                return conta;
+            }
+        }
+        return null;
+    }
+
     public void registrarTransacao(double valor) {
         Transacao novaTransacao = new Transacao(valor);
         extrato.add(novaTransacao);
