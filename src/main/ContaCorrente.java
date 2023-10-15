@@ -21,23 +21,25 @@ public class ContaCorrente extends Conta {
     }
 
     public void sacar(double valor) {
-        double saldoAtual = getSaldo();
-        double limiteSaqueEspecial = getLimiteSaqueEspecial();
+    double saldoAtual = getSaldo();
+    double limiteSaqueEspecial = getLimiteSaqueEspecial();
 
-        if (valor <= 0) {
-            System.out.println("O valor do saque deve ser positivo.");
-        } else if (saldoAtual + limiteSaqueEspecial >= valor) {
-            if (saldoAtual >= valor) {
-                saldoAtual -= valor;
-            } else {
-                double saqueEspecial = valor - saldoAtual;
-                saldoAtual = 0;
-                System.out.println("Saque de R$" + saldoAtual + " realizado com sucesso.");
-                System.out.println("Saque especial de R$" + saqueEspecial + " realizado com sucesso.");
-            }
-            setSaldo(saldoAtual);
+    if (valor <= 0) {
+        System.out.println("O valor do saque deve ser positivo.");
+    } else if (saldoAtual + limiteSaqueEspecial >= valor) {
+        if (saldoAtual >= valor) {
+            saldoAtual -= valor;
         } else {
-            System.out.println("Saldo e limite de saque especial insuficientes para realizar o saque.");
+            double saqueEspecial = valor - saldoAtual;
+            saldoAtual = 0;
+            System.out.println("Saque de R$" + saldoAtual + " realizado com sucesso.");
+            System.out.println("Saque especial de R$" + saqueEspecial + " realizado com sucesso.");
         }
+        saldoAtual -= 20; // Subtrai a taxa mensal
+        setSaldo(saldoAtual);
+        System.out.println("Saque de R$" + valor + " realizado com sucesso.");
+    } else {
+        System.out.println("Saldo e limite de saque especial insuficientes para realizar o saque.");
     }
+}
 }
