@@ -1,5 +1,4 @@
 package main;
-
 public class RendaFixa extends Conta {
     private double rendimentoContratado;
     private static final double IMPOSTO = 0.15;

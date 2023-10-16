@@ -61,4 +61,15 @@ public class Conta {
         // Implemente a lógica para atualizar o saldo da conta aqui
     }
 
+    public void setPontosFidelidade(int i) {
+    }
+
+    public int getPontosFidelidade() {
+        return 0;
+    }
+
+    public boolean saque(double taxaMensal) {
+        return false;
+    }
+
 }

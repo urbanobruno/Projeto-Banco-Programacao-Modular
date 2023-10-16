@@ -32,13 +32,37 @@ public class Main {
                     System.out.print("Digite o CPF do cliente: ");
                     String cpf = scanner.next();
 
-                    if (!Cliente.cpfExiste(cpf)) {
-                        Cliente novoCliente = new Cliente(nome, cpf);
+                    // Solicite o tipo de cliente
+                    System.out.println("Escolha o tipo de cliente:");
+                    System.out.println("1. Regular");
+                    System.out.println("2. Gold");
+                    System.out.println("3. Vip");
+                    int tipoCliente = scanner.nextInt();
 
-                        Cliente.clientes.add(novoCliente);
-                        System.out.println("Cliente criado com sucesso!");
-                    } else {
-                        System.out.println("CPF já cadastrado!");
+                    Cliente novoCliente = null;
+
+                    switch (tipoCliente) {
+                        case 1:
+                            novoCliente = new Cliente(nome, cpf);
+                            break;
+                        case 2:
+                            novoCliente = new ClienteGold(nome, cpf);
+                            break;
+                        case 3:
+                            novoCliente = new ClienteVip(nome, cpf);
+                            break;
+                        default:
+                            System.out.println("Tipo de cliente inválido.");
+                            break;
+                    }
+
+                    if (novoCliente != null) {
+                        if (!Cliente.cpfExiste(cpf)) {
+                            Cliente.clientes.add(novoCliente);
+                            System.out.println("Cliente criado com sucesso!");
+                        } else {
+                            System.out.println("CPF já cadastrado!");
+                        }
                     }
 
                     break;
