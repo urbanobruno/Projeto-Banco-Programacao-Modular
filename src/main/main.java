@@ -2,7 +2,7 @@ package main;
 
 import java.util.Scanner;
 
-public class Main {
+public class main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int opcao;
@@ -63,6 +63,8 @@ public class Main {
                         } else {
                             System.out.println("CPF já cadastrado!");
                         }
+                    } else {
+                        System.out.println("Cliente não cadastrado!");
                     }
 
                     break;
@@ -73,9 +75,43 @@ public class Main {
                     cpf = scanner.next();
                     Cliente cliente = Cliente.buscarClientePorCPF(cpf);
                     if (cliente != null) {
-                        Conta novaConta = new Conta(cliente);
-                        cliente.contas.add(novaConta);
-                        Conta.contas.add(novaConta);
+
+                        // Solicite o tipo de cliente
+                        System.out.println("Escolha o tipo de conta:");
+                        System.out.println("1. Corrente");
+                        System.out.println("2. Poupança");
+                        System.out.println("3. Renda Fixa");
+                        System.out.println("4. Investimento");
+
+                        int tipoConta = scanner.nextInt();
+
+                        Conta novoConta = null;
+
+                        switch (tipoConta) {
+                            case 1:
+                                novoConta = new ContaCorrente(cliente);
+                                break;
+                            case 2:
+                                novoConta = new Poupanca(cliente);
+                                break;
+                            case 3:
+
+                                System.out.println("Rendimento da conta:");
+                                double rendimentoRendaFixa = scanner.nextDouble();
+
+                                novoConta = new RendaFixa(cliente, rendimentoRendaFixa);
+                                break;
+                            case 4:
+                                novoConta = new Investimento(cliente);
+                                break;
+                            default:
+                                System.out.println("Tipo de cliente inválido.");
+                                break;
+                        }
+
+
+                        cliente.contas.add(novoConta);
+                        Conta.contas.add(novoConta);
                         System.out.println("Conta criada com sucesso!");
                     } else {
                         System.out.println("Cliente não encontrado!");
@@ -137,7 +173,24 @@ public class Main {
                     break;
 
                 case 8:
-                    // Lógica para sacar
+                    System.out.print("Digite o CPF do cliente: ");
+                    String cpfSaque = scanner.next();
+                    Cliente clienteSaque = Cliente.buscarClientePorCPF(cpfSaque);
+                    if (clienteSaque != null) {
+                        System.out.print("Digite o número da conta: ");
+                        String numeroContaSaque = scanner.next();
+                        Conta contaSaque = Conta.buscarContaPorNumero(numeroContaSaque);
+
+                        if (contaSaque != null) {
+                            System.out.print("Digite o valor a ser depositado: ");
+                            double valorSaque = scanner.nextDouble();
+                            contaSaque.sacar(valorSaque);
+                        } else {
+                            System.out.println("Conta não encontrada!");
+                        }
+                    } else {
+                        System.out.println("Cliente não encontrado!");
+                    }
                     break;
                 case 9:
 

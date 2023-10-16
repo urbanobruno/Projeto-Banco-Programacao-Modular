@@ -14,6 +14,7 @@ public class Poupanca extends Conta {
         setSaldo(saldoAtual);
     }
 
+    @Override
     public void sacar(double valor) {
         double saldoAtual = getSaldo();
 

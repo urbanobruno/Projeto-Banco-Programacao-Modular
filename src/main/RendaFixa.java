@@ -1,4 +1,5 @@
 package main;
+
 public class RendaFixa extends Conta {
     private double rendimentoContratado;
     private static final double IMPOSTO = 0.15;
@@ -17,27 +18,29 @@ public class RendaFixa extends Conta {
         setSaldo(saldoAtual);
     }
 
+    @Override
     public void sacar(double valor) {
-    double saldoAtual = getSaldo();
+        double saldoAtual = getSaldo();
 
-    if (valor <= 0) {
-        System.out.println("O valor do saque deve ser positivo.");
-    } else {
-        double rendimento = this.rendimentoContratado / 100; // Converta a taxa de rendimento contratada para a forma decimal
-        double rendimentoDiario = saldoAtual * rendimento;
-        double rendimentoTaxado = rendimentoDiario * IMPOSTO;
-
-        if (saldoAtual >= valor + rendimentoTaxado) {
-            saldoAtual -= (valor + rendimentoTaxado);
-            setSaldo(saldoAtual);
-
-            // Zere o rendimento após o saque
-            this.rendimentoContratado = 0;
-
-            System.out.println("Saque de R$" + valor + " realizado com sucesso.");
+        if (valor <= 0) {
+            System.out.println("O valor do saque deve ser positivo.");
         } else {
-            System.out.println("Saldo insuficiente para realizar o saque após o desconto de imposto.");
+            double rendimento = this.rendimentoContratado / 100; // Converta a taxa de rendimento contratada para a
+                                                                 // forma decimal
+            double rendimentoDiario = saldoAtual * rendimento;
+            double rendimentoTaxado = rendimentoDiario * IMPOSTO;
+
+            if (saldoAtual >= valor + rendimentoTaxado) {
+                saldoAtual -= (valor + rendimentoTaxado);
+                setSaldo(saldoAtual);
+
+                // Zere o rendimento após o saque
+                this.rendimentoContratado = 0;
+
+                System.out.println("Saque de R$" + valor + " realizado com sucesso.");
+            } else {
+                System.out.println("Saldo insuficiente para realizar o saque após o desconto de imposto.");
+            }
         }
     }
-}
 }

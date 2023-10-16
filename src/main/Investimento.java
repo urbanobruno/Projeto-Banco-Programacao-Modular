@@ -3,8 +3,8 @@ package main;
 import java.util.Random;
 
 public class Investimento extends Conta {
-    private static final double IMPOSTO = 0.15; 
-    private static final double TAXA = 0.015; 
+    private static final double IMPOSTO = 0.15;
+    private static final double TAXA = 0.015;
 
     private double rendimento = 0;
 
@@ -20,7 +20,8 @@ public class Investimento extends Conta {
 
         double saldoAnterior = saldoAtual; // Saldo anterior antes da variação
 
-        // Calcule o rendimento diário como a diferença entre o saldo atual após a variação e o saldo anterior
+        // Calcule o rendimento diário como a diferença entre o saldo atual após a
+        // variação e o saldo anterior
         double rendimentoDiario = (saldoAtual * variacaoDiaria) - saldoAnterior;
 
         this.rendimento += rendimentoDiario;
@@ -29,9 +30,8 @@ public class Investimento extends Conta {
         setSaldo(saldoAtual);
     }
 
-
-
- public void sacar(double valor) {
+    @Override
+    public void sacar(double valor) {
         double saldoAtual = this.getSaldo();
 
         if (valor <= 0) {
@@ -53,10 +53,3 @@ public class Investimento extends Conta {
         }
     }
 }
-
-
-
-
-
-
-
