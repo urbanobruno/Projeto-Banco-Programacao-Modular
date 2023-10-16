@@ -31,13 +31,16 @@ public class Main {
                     String nome = scanner.next();
                     System.out.print("Digite o CPF do cliente: ");
                     String cpf = scanner.next();
+
                     if (!Cliente.cpfExiste(cpf)) {
                         Cliente novoCliente = new Cliente(nome, cpf);
+
                         Cliente.clientes.add(novoCliente);
                         System.out.println("Cliente criado com sucesso!");
                     } else {
                         System.out.println("CPF já cadastrado!");
                     }
+
                     break;
                 case 2:
                     // Lógica para criar conta
