@@ -1,5 +1,5 @@
 # Projeto2-PM
-Projeto 2 de Programação Modular feita em grupo
+Projeto 2 (Banco) da matéria Programação Modular feita em grupo
 
 ## Alunos integrantes da equipe
 
